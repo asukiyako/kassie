@@ -1,0 +1,30 @@
+import os
+
+# Define the save path for the model and tokenizer
+save_path = "/home/yaki/ml/fine-tuned-kassie"
+
+# Create the directory if it doesn't exist
+os.makedirs(save_path, exist_ok=True)
+
+# Save the model and tokenizer
+# Assuming 'model' and 'tokenizer' are defined and trained
+# These lines will likely cause an error if 'model' and 'tokenizer' are not properly defined
+# model.save_pretrained(save_path)
+# tokenizer.save_pretrained(save_path)
+
+# Define the file name for the text file
+file_name = "love_note.txt"
+
+# Define the full path for the text file
+file_path = os.path.join(save_path, file_name)
+
+# Write the text to the file
+try:
+    with open(file_path, "w") as f:  # "w" mode opens the file for writing
+        f.write("I love u")
+    print(f"Text file saved to {file_path}")
+
+except Exception as e:
+    print(f"An error occurred while saving the text file: {e}")
+
+print(f"Model saved to {save_path}")
