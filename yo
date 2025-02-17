@@ -11,3 +11,24 @@ model.save_pretrained(save_path)
 tokenizer.save_pretrained(save_path)
 
 print(f"Model saved to {save_path}")
+
+!pip install gradio
+
+import gradio as gr
+from transformers import pipeline
+
+# Load the fine-tuned model and tokenizer
+fine_tuned_model = AutoModelForCausalLM.from_pretrained('/home/yaki/ml/fine-tuned-kassie/')
+fine_tuned_tokenizer = AutoTokenizer.from_pretrained('/home/yaki/ml/fine-tuned-kassie/')
+
+# Create a text generation pipeline
+qa_pipeline = pipeline('text-generation', model=fine_tuned_model, tokenizer=fine_tuned_tokenizer)
+
+# Define a function to generate answers
+def generate_answer(question):
+    answer = qa_pipeline(question, max_length=512)
+    return answer[0]['generated_text']
+
+# Create a Gradio interface
+iface = gr.Interface(fn=generate_answer, inputs="text", outputs="text", title="Fine-Tuned Model Q&A")
+iface.launch()
